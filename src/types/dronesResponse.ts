@@ -1,4 +1,4 @@
-export interface drone {
+export interface Drone {
   address: string;
   avarage_speed: number;
   battery: number;
