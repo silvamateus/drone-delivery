@@ -6,11 +6,7 @@
     label-size="sm"
     label-align="left"
   >
-    <b-form-input
-      :id="`search-label-${label}`"
-      :value="value"
-      @input="updateValue($event)"
-    ></b-form-input>
+    <b-form-input :id="`search-label-${label}`" :value="value" @input="updateValue($event)"></b-form-input>
   </b-form-group>
 </template>
 

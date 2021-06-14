@@ -1,12 +1,8 @@
 <template>
   <b-container>
     <b-row>
-      <b-col md="2" lg="2">
-        <search-input label="Drone ID" v-model="droneID"></search-input
-      ></b-col>
-      <b-col md="4" lg="4">
-        <search-input label="Name" v-model="droneName"></search-input
-      ></b-col>
+      <b-col md="2" lg="2"> <search-input label="Drone ID" v-model="droneID"></search-input></b-col>
+      <b-col md="4" lg="6"> <search-input label="Name" v-model="droneName"></search-input></b-col>
       <b-col md="2" lg="2">
         <search-select label="Current Fly" v-model="droneFly"></search-select>
       </b-col>
