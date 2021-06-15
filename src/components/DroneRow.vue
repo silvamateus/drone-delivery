@@ -13,6 +13,12 @@
     <td class="center-cell">
       <speed-cell :speed="drone.average_speed"></speed-cell>
     </td>
+    <td class="center-cell">
+      <current-fly-cell :fly="drone.fly" :status="drone.status"></current-fly-cell>
+    </td>
+    <td class="center-cell">
+      {{ drone.status }}
+    </td>
   </tr>
 </template>
 
@@ -21,9 +27,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { Drone } from "@/types/dronesResponse";
 import CustomerCell from "./table-cells/CustomerCell.vue";
 import BatteryCell from "./table-cells/BatteryCell.vue";
+import SpeedCell from "./table-cells/SpeedCell.vue";
+import CurrentFlyCell from "./table-cells/CurrentFlyCell.vue";
 
 @Component({
-  components: { CustomerCell, BatteryCell },
+  components: { CustomerCell, BatteryCell, SpeedCell, CurrentFlyCell },
 })
 export default class extends Vue {
   @Prop() drone!: Drone;
@@ -35,5 +43,8 @@ export default class extends Vue {
   position: relative;
   height: 100%;
   width: 5rem;
+}
+.center-cell {
+  text-align: center;
 }
 </style>
