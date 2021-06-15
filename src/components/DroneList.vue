@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <table class="table table-responsive-sm">
+    <table class="table table-responsive-sm table-hover">
       <thead>
         <tr>
           <th scope="col">drone</th>

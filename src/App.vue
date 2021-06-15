@@ -5,6 +5,9 @@
 </template>
 
 <style>
+:root {
+  --bg-percentage: #2ecc71;
+}
 #app {
   font-family: "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
