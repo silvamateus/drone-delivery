@@ -7,6 +7,12 @@
     <td class="battery-cell">
       <battery-cell :percentage="drone.battery"></battery-cell>
     </td>
+    <td class="center-cell">
+      <speed-cell :speed="drone.max_speed"></speed-cell>
+    </td>
+    <td class="center-cell">
+      <speed-cell :speed="drone.average_speed"></speed-cell>
+    </td>
   </tr>
 </template>
 
