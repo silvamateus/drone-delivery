@@ -7,7 +7,7 @@
           <th scope="col">customer</th>
           <th scope="col">batteries</th>
           <th scope="col">max speed</th>
-          <th scope="col" class="center-head">avarage speed</th>
+          <th scope="col" class="center-head">average speed</th>
           <th scope="col" class="center-head">current fly</th>
           <th scope="col" class="center-head">status</th>
         </tr>
