@@ -1,11 +1,18 @@
 <template>
-  <div>
+  <div @mouseenter="showDirections()" @mouseleave="hideDirections()" class="direction-container">
     <div v-if="statusInHalt()" class="halt"></div>
     <div v-else class="flying" :class="{ 'flying-back': isFlyingBack() }">
       <span class="progress" :style="{ left: `calc(${flyingProgress()}% - 15px)` }"></span>
-    </div>
-    <div v-if="showDirection">
-      <span>{{ flyDirection }}</span>
+      <transition name="fade">
+        <div
+          v-if="showDirection"
+          class="fly-progress-message"
+          :class="{ 'flying-back': isFlyingBack() }"
+          :style="{ left: `calc(${flyingProgress()}% - 37px)` }"
+        >
+          <span>{{ flyDirection }}</span>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -19,7 +26,6 @@ export default class extends Vue {
   @Prop() status!: string;
 
   halt: string[] = ["offline", "charging", "repair"];
-  progress = 0;
   showDirection = false;
 
   statusInHalt(): boolean {
@@ -29,8 +35,15 @@ export default class extends Vue {
     return this.fly > 50;
   }
   flyingProgress(): number {
-    this.progress = ((this.fly % 50) / 50) * 100;
-    return this.progress;
+    const progress = ((this.fly % 50) / 50) * 100;
+    return progress;
+  }
+
+  showDirections(): void {
+    this.showDirection = true;
+  }
+  hideDirections(): void {
+    this.showDirection = false;
   }
 
   get flyDirection(): string {
@@ -40,6 +53,9 @@ export default class extends Vue {
 </script>
 
 <style scoped>
+.direction-container {
+  position: relative;
+}
 .halt {
   position: relative;
   width: 100%;
@@ -85,5 +101,34 @@ export default class extends Vue {
   border: 2px solid black;
   background-color: white;
   top: -4px;
+}
+
+.fly-progress-message {
+  background-color: #acc4d4cc;
+  position: absolute;
+  top: -25px;
+  border-radius: 1rem;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+}
+.fly-progress-message::before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 5px 3.5px 0 3.5px;
+  border-color: #acc4d4cc transparent transparent transparent;
+  bottom: -4px;
+  left: 45%;
+}
+
+/* Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
