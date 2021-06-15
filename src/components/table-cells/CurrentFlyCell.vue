@@ -8,9 +8,9 @@
           v-if="showDirection"
           class="fly-progress-message"
           :class="{ 'flying-back': isFlyingBack() }"
-          :style="{ left: `calc(${flyingProgress()}% - 37px)` }"
+          :style="{ left: `calc(${flyingProgress()}% - 50px)` }"
         >
-          <span>{{ flyDirection }}</span>
+          <span>{{ flyDirection }} {{ flyingProgress() }}%</span>
         </div>
       </transition>
     </div>
