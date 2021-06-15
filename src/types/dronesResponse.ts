@@ -1,6 +1,6 @@
 export interface Drone {
   address: string;
-  avarage_speed: number;
+  average_speed: number;
   battery: number;
   fly: number;
   id: number;

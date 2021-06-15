@@ -7,9 +7,9 @@
           <th scope="col">customer</th>
           <th scope="col">batteries</th>
           <th scope="col">max speed</th>
-          <th scope="col">avarage speed</th>
-          <th scope="col">current fly</th>
-          <th scope="col">status</th>
+          <th scope="col" class="center-head">avarage speed</th>
+          <th scope="col" class="center-head">current fly</th>
+          <th scope="col" class="center-head">status</th>
         </tr>
       </thead>
       <tbody>
@@ -41,5 +41,9 @@ thead {
 thead,
 tbody {
   text-align: left;
+}
+
+.center-head {
+  text-align: center;
 }
 </style>
