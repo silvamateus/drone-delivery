@@ -7,6 +7,7 @@
 <style>
 :root {
   --bg-percentage: #2ecc71;
+  --bg-status: #3498db;
 }
 #app {
   font-family: "Rubik", sans-serif;

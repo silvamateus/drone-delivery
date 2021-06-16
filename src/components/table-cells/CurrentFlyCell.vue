@@ -2,7 +2,7 @@
   <div @mouseenter="showDirections()" @mouseleave="hideDirections()" class="direction-container">
     <div v-if="statusInHalt()" class="halt"></div>
     <div v-else class="flying" :class="{ 'flying-back': isFlyingBack() }">
-      <span class="progress" :style="{ left: `calc(${flyingProgress()}% - 15px)` }"></span>
+      <span class="progress" :style="{ left: `calc(${flyingProgress()}% - 10px)` }"></span>
       <transition name="fade">
         <div
           v-if="showDirection"
@@ -35,7 +35,7 @@ export default class extends Vue {
     return this.fly > 50;
   }
   flyingProgress(): number {
-    const progress = ((this.fly % 50) / 50) * 100;
+    const progress = ((this.fly % 51) / 50) * 100;
     return progress;
   }
 
