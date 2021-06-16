@@ -17,7 +17,7 @@
       <current-fly-cell :fly="drone.fly" :status="drone.status"></current-fly-cell>
     </td>
     <td class="center-cell">
-      {{ drone.status }}
+      <status-cell :status="drone.status"></status-cell>
     </td>
   </tr>
 </template>
@@ -29,9 +29,10 @@ import CustomerCell from "./table-cells/CustomerCell.vue";
 import BatteryCell from "./table-cells/BatteryCell.vue";
 import SpeedCell from "./table-cells/SpeedCell.vue";
 import CurrentFlyCell from "./table-cells/CurrentFlyCell.vue";
+import StatusCell from "./table-cells/StatusCell.vue";
 
 @Component({
-  components: { CustomerCell, BatteryCell, SpeedCell, CurrentFlyCell },
+  components: { CustomerCell, BatteryCell, SpeedCell, CurrentFlyCell, StatusCell },
 })
 export default class extends Vue {
   @Prop() drone!: Drone;
