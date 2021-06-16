@@ -8,7 +8,7 @@
   >
     <b-form-select
       value="value"
-      @submit="updateSelect($event)"
+      @input="updateSelect($event)"
       :id="`select-${label}`"
       :options="options"
     ></b-form-select>
