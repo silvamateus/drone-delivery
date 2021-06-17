@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <drone-row v-for="drone of drones" :drone="drone" :key="drone.id"></drone-row>
+        <drone-row @openDetails="sendToOpen($event)" v-for="drone of drones" :drone="drone" :key="drone.id"></drone-row>
       </tbody>
     </table>
   </b-container>
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Drone } from "@/types/dronesResponse";
+import { DroneDetails } from "@/types/dronesDetails";
 import DroneRow from "./DroneRow.vue";
 
 @Component({
@@ -29,6 +30,9 @@ import DroneRow from "./DroneRow.vue";
 })
 export default class extends Vue {
   @Prop() drones!: Drone[];
+  sendToOpen(details: DroneDetails): void {
+    this.$emit("openDetails", details);
+  }
 }
 </script>
 

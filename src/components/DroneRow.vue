@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="clickable" @click="openDetails()">
     <td>{{ drone.id }}</td>
     <td>
       <customer-cell :name="drone.name" :address="drone.address"></customer-cell>
@@ -36,6 +36,10 @@ import StatusCell from "./table-cells/StatusCell.vue";
 })
 export default class extends Vue {
   @Prop() drone!: Drone;
+
+  openDetails(): void {
+    this.$emit("openDetails", { open: true, id: this.drone.id });
+  }
 }
 </script>
 
@@ -47,5 +51,8 @@ export default class extends Vue {
 }
 .center-cell {
   text-align: center;
+}
+.clickable {
+  cursor: pointer;
 }
 </style>

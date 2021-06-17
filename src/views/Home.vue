@@ -8,21 +8,31 @@
       :statusArray="statusArray"
       :flightArray="flightArray"
     />
-    <drone-list :drones="drones"></drone-list>
+    <drone-list @openDetails="openDetails($event)" :drones="drones"></drone-list>
+    <pagination
+      v-if="showPagination()"
+      :page="parseInt(page)"
+      :numberOfPages="numberOfPages"
+      @previousPage="changeToPrevious($event)"
+      @nextPage="changeToNext($event)"
+    ></pagination>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import SearchFilter from "@/components/SearchFilter.vue";
 import { getDrones, filterDrones, getDronesFull } from "@/services/getDrones";
 import { Drone } from "@/types/dronesResponse";
 import { QueryObject } from "@/types/filterQuery";
+import { DroneDetails } from "@/types/dronesDetails";
+import SearchFilter from "@/components/SearchFilter.vue";
 import DroneList from "@/components/DroneList.vue";
+import Pagination from "@/components/Pagination.vue";
 @Component({
   components: {
     SearchFilter,
     DroneList,
+    Pagination,
   },
 })
 export default class Home extends Vue {
@@ -30,6 +40,10 @@ export default class Home extends Vue {
   statusArray: string[] = [];
   flightArray: number[] = [];
   numberOfPages = 0;
+  page = "";
+  isFiltered = false;
+  showDetails = false;
+  id = 0;
 
   async fetchDrones(page: string): Promise<void> {
     try {
@@ -40,21 +54,27 @@ export default class Home extends Vue {
     }
   }
 
-  ifHasProperty(item: QueryObject, property: string): boolean {
+  /**
+   * Methods
+   */
+
+  ifHasProperty(item: Drone, property: string): boolean {
     return Object.prototype.hasOwnProperty.call(item, property);
   }
 
-  getStatuses(status): string[] {
+  getStatuses(status: Drone[]): string[] {
     return status
-      .map((item: QueryObject) => {
+      .map((item: any) => {
+        /* I know it's a bad pratice */
         if (this.ifHasProperty(item, "status")) return item.status;
       })
       .filter((item: string, pos: number, self: string[]) => self.indexOf(item) === pos);
   }
 
-  getFlights(flight): number[] {
+  getFlights(flight: Drone[]): number[] {
     return flight
-      .map((item: QueryObject) => {
+      .map((item: any) => {
+        /* I know it's a bad pratice */
         if (this.ifHasProperty(item, "fly")) return item.fly;
       })
       .filter((item: number, pos: number, self: number[]) => self.indexOf(item) === pos)
@@ -68,7 +88,6 @@ export default class Home extends Vue {
         this.statusArray = this.getStatuses(response.data);
         this.flightArray = this.getFlights(response.data);
         this.numberOfPages = Math.ceil(response.data.length / 20);
-        console.log(this.numberOfPages);
       }
     } catch (error) {
       console.error(error);
@@ -99,6 +118,7 @@ export default class Home extends Vue {
     setTimeout(() => {
       this.changeQuery(queryFilter);
       this.fetchWithFilter(queryFilter);
+      this.isFiltered = true;
     }, 1000);
   }
   changeName(val: string): void {
@@ -113,13 +133,37 @@ export default class Home extends Vue {
   changeStatus(val: string): void {
     this.applyFilter("status", val);
   }
+
+  changeToNext(page: string): void {
+    this.page = page;
+    this.changeQuery({ page: page });
+    this.fetchDrones(page);
+  }
+  changeToPrevious(page: string): void {
+    this.page = page;
+    this.changeQuery({ page: page });
+    this.fetchDrones(page);
+  }
+
+  showPagination(): boolean {
+    return !this.isFiltered;
+  }
+
+  openDetails(details: DroneDetails): void {
+    const { open, id } = details;
+    this.showDetails = open;
+    this.id = id;
+  }
+  /**
+   * lifecicle
+   */
   mounted(): void {
     if (this.$route.query.id && typeof this.$route.query.id === "string") {
       this.fetchWithFilter({ id: this.$route.query.id });
     } else {
-      let page = this.$route.query.page;
-      if (!page) page = "1";
-      if (typeof page === "string") this.fetchDrones(page);
+      if (typeof this.$route.query.page === "string") this.page = this.$route.query.page;
+      if (!this.page) this.page = "1";
+      if (typeof this.page === "string") this.fetchDrones(this.page);
     }
     this.FillFilters();
   }

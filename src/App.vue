@@ -17,6 +17,11 @@
   color: #2c3e50;
 }
 
+button,
+button:disabled {
+  font-family: inherit;
+}
+
 #nav {
   padding: 30px;
 }
