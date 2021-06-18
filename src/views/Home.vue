@@ -83,7 +83,7 @@ export default class Home extends Vue {
       .sort((first, last) => first - last);
   }
 
-  async FillFilters(): Promise<void> {
+  async fillFilters(): Promise<void> {
     this.loading = true;
     try {
       const response = await getDronesFull();
@@ -175,7 +175,7 @@ export default class Home extends Vue {
       if (!this.page) this.page = "1";
       if (typeof this.page === "string") this.fetchDrones(this.page);
     }
-    this.FillFilters();
+    this.fillFilters();
   }
 }
 </script>
