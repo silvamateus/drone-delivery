@@ -72,7 +72,7 @@ export default class extends Vue {
     return this.drone.fly ? ` ${flyStatus} ${((this.drone.fly % 51) / 50) * 100}` : 0;
   }
 
-  goBack() {
+  goBack(): void {
     this.$router.push("/");
   }
 

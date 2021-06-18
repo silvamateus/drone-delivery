@@ -22,7 +22,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Drone } from "@/types/dronesResponse";
-import { DroneDetails } from "@/types/dronesDetails";
 import DroneRow from "./DroneRow.vue";
 
 @Component({
