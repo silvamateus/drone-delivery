@@ -16,6 +16,7 @@
       @previousPage="changeToPrevious($event)"
       @nextPage="changeToNext($event)"
     ></pagination>
+    <loader v-if="loading"></loader>
   </div>
 </template>
 
@@ -24,15 +25,16 @@ import { Component, Vue } from "vue-property-decorator";
 import { getDrones, filterDrones, getDronesFull } from "@/services/getDrones";
 import { Drone } from "@/types/dronesResponse";
 import { QueryObject } from "@/types/filterQuery";
-import { DroneDetails } from "@/types/dronesDetails";
 import SearchFilter from "@/components/SearchFilter.vue";
 import DroneList from "@/components/DroneList.vue";
 import Pagination from "@/components/Pagination.vue";
+import Loader from "@/components/Loader.vue";
 @Component({
   components: {
     SearchFilter,
     DroneList,
     Pagination,
+    Loader,
   },
 })
 export default class Home extends Vue {
@@ -42,12 +44,12 @@ export default class Home extends Vue {
   numberOfPages = 0;
   page = "";
   isFiltered = false;
-  showDetails = false;
-  id = 0;
+  loading = false;
 
   async fetchDrones(page: string): Promise<void> {
     try {
       const response = await getDrones(page);
+      this.loading = false;
       if (response) this.drones = response.data;
     } catch (error) {
       console.error(error);
@@ -114,32 +116,42 @@ export default class Home extends Vue {
     const queryFilter = {
       [key]: val,
     };
-    console.log(queryFilter);
     setTimeout(() => {
       this.changeQuery(queryFilter);
       this.fetchWithFilter(queryFilter);
       this.isFiltered = true;
+      this.loading = false;
     }, 1000);
   }
+
+  startLoadingWithDelay(): void {
+    setTimeout(() => (this.loading = true), 500);
+  }
   changeName(val: string): void {
+    this.startLoadingWithDelay();
     this.applyFilter("name", val);
   }
   changeId(val: string): void {
+    this.startLoadingWithDelay();
     this.applyFilter("id", val);
   }
   changeFly(val: string): void {
+    this.startLoadingWithDelay();
     this.applyFilter("fly", val.toString());
   }
   changeStatus(val: string): void {
+    this.startLoadingWithDelay();
     this.applyFilter("status", val);
   }
 
   changeToNext(page: string): void {
+    this.loading = true;
     this.page = page;
     this.changeQuery({ page: page });
     this.fetchDrones(page);
   }
   changeToPrevious(page: string): void {
+    this.loading = true;
     this.page = page;
     this.changeQuery({ page: page });
     this.fetchDrones(page);
@@ -152,8 +164,9 @@ export default class Home extends Vue {
    * lifecicle
    */
   mounted(): void {
+    this.loading = true;
     if (this.$route.query.id && typeof this.$route.query.id === "string") {
-      this.fetchWithFilter({ id: this.$route.query.id });
+      this.applyFilter("id", this.$route.query.id);
     } else {
       if (typeof this.$route.query.page === "string") this.page = this.$route.query.page;
       if (!this.page) this.page = "1";
