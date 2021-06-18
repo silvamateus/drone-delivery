@@ -38,7 +38,7 @@ export default class extends Vue {
   @Prop() drone!: Drone;
 
   openDetails(): void {
-    this.$emit("openDetails", { open: true, id: this.drone.id });
+    this.$router.push(`/${this.drone.id}`);
   }
 }
 </script>

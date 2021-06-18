@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <drone-row @openDetails="sendToOpen($event)" v-for="drone of drones" :drone="drone" :key="drone.id"></drone-row>
+        <drone-row v-for="drone of drones" :drone="drone" :key="drone.id"></drone-row>
       </tbody>
     </table>
   </b-container>
@@ -30,9 +30,6 @@ import DroneRow from "./DroneRow.vue";
 })
 export default class extends Vue {
   @Prop() drones!: Drone[];
-  sendToOpen(details: DroneDetails): void {
-    this.$emit("openDetails", details);
-  }
 }
 </script>
 

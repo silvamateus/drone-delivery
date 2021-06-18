@@ -26,10 +26,10 @@ export default class extends Vue {
     this.$emit("nextPage", `${this.page + 1}`);
   }
 
-  isGreaterThan() {
+  isGreaterThan(): boolean {
     return this.page > 1;
   }
-  isLessThan() {
+  isLessThan(): boolean {
     return this.page < this.numberOfPages;
   }
 }

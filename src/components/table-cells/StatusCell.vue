@@ -1,6 +1,6 @@
 <template>
   <div class="pt-1">
-    <span class="status" :class="{ warn: statusIs('delayed'), danger: statusIs('failed') }">{{ status }}</span>
+    <p class="status" :class="{ warn: statusIs('delayed'), danger: statusIs('failed') }">{{ status }}</p>
   </div>
 </template>
 

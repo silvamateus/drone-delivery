@@ -38,3 +38,12 @@ export const filterDrones = async (filter: QueryObject): Promise<AxiosResponse<a
     console.error(error);
   }
 };
+
+export const getDroneDetails = async (id: string): Promise<AxiosResponse<any> | undefined> => {
+  try {
+    const response = instance.get(`/${id}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

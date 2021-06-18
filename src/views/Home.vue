@@ -8,7 +8,7 @@
       :statusArray="statusArray"
       :flightArray="flightArray"
     />
-    <drone-list @openDetails="openDetails($event)" :drones="drones"></drone-list>
+    <drone-list :drones="drones"></drone-list>
     <pagination
       v-if="showPagination()"
       :page="parseInt(page)"
@@ -147,12 +147,6 @@ export default class Home extends Vue {
 
   showPagination(): boolean {
     return !this.isFiltered;
-  }
-
-  openDetails(details: DroneDetails): void {
-    const { open, id } = details;
-    this.showDetails = open;
-    this.id = id;
   }
   /**
    * lifecicle

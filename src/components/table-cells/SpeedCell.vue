@@ -12,23 +12,27 @@ export default class extends Vue {
   @Prop() speed!: number;
 
   getPrefix(): string | undefined {
-    const prefix = this.speed
-      .toString()
-      .match(/(\d+)./g)
-      ?.toString()
-      .replace(".", "");
-    if (!prefix) return this.speed.toString();
-    if (prefix) return prefix;
+    if (this.speed) {
+      const prefix = this.speed
+        .toString()
+        .match(/(\d+)./g)
+        ?.toString()
+        .replace(".", "");
+      if (!prefix) return this.speed.toString();
+      if (prefix) return prefix;
+    }
   }
 
   getSufix(): string | number | undefined {
-    const sufix = this.speed
-      .toString()
-      .match(/.(\d+)$/g)
-      ?.toString()
-      .replace(".", "");
-    if (!sufix) return 0;
-    if (sufix) return sufix;
+    if (this.speed) {
+      const sufix = this.speed
+        .toString()
+        .match(/.(\d+)$/g)
+        ?.toString()
+        .replace(".", "");
+      if (!sufix) return 0;
+      if (sufix) return sufix;
+    }
   }
 }
 </script>
