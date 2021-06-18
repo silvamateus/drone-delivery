@@ -7,7 +7,7 @@
     label-align="left"
   >
     <b-form-select
-      value="value"
+      :value="value"
       @input="updateSelect($event)"
       :id="`select-${label}`"
       :options="options"

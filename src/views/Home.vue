@@ -84,14 +84,17 @@ export default class Home extends Vue {
   }
 
   async FillFilters(): Promise<void> {
+    this.loading = true;
     try {
       const response = await getDronesFull();
       if (response) {
         this.statusArray = this.getStatuses(response.data);
         this.flightArray = this.getFlights(response.data);
         this.numberOfPages = Math.ceil(response.data.length / 20);
+        this.loading = false;
       }
     } catch (error) {
+      this.loading = false;
       console.error(error);
     }
   }
